@@ -7,7 +7,7 @@ class Day05(private val input: List<String> = readInputLines("day05")) : Day() {
         val comparator = RuleComparator(rules)
 
         return updates
-            .filter { comparator.isSorted(it) }
+            .filter { it.isSortedBy(comparator) }
             .sumOf { it[it.size / 2] }
     }
 
@@ -16,7 +16,7 @@ class Day05(private val input: List<String> = readInputLines("day05")) : Day() {
 
         val comparator = RuleComparator(rules)
 
-        return updates.filter { !comparator.isSorted(it) }
+        return updates.filter { !it.isSortedBy(comparator) }
             .sumOf { it.sortedWith(comparator)[it.size / 2] }
     }
 
@@ -25,10 +25,6 @@ class Day05(private val input: List<String> = readInputLines("day05")) : Day() {
             val numRules = rules[o1] ?: listOf()
             return if (o2 in numRules) -1 else 1
         }
-
-        fun isSorted(list: List<Int>) = list.zipWithNext()
-            .map { (o1, o2) -> compare(o1, o2) }
-            .all { it == -1 }
     }
 
     private fun parseInput(): Pair<Map<Int, List<Int>>, List<List<Int>>> {

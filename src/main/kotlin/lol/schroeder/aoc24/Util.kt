@@ -82,6 +82,10 @@ fun <T> List<T>.toPair(): Pair<T, T> {
     return first() to last()
 }
 
+fun <T> Iterable<T>.isSortedBy(comparator: Comparator<in T>): Boolean {
+    return this.asSequence().zipWithNext { a, b -> comparator.compare(a, b) }.all { it <= 0 }
+}
+
 fun String.extractAll(pattern: String) = Regex(pattern)
     .findAll(this)
     .map { it.value }
