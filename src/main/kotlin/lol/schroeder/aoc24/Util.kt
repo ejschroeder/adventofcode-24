@@ -67,6 +67,9 @@ fun LongRange.merge(other: LongRange): LongRange {
 
 fun String.isUpperCase(): Boolean = this.all { it.isUpperCase() }
 fun String.splitAtIndex(index: Int) = substring(0, index) to substring(index)
+fun String.splitOnFirst(str: String) = split(str, limit = 2).let {
+    Pair(it[0], it.getOrElse(1) { "" })
+}
 fun String.isNumeric(): Boolean = this.all { it.isDigit() }
 fun String.md5(): String = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray())).toString(16)
 fun String.extractInts() = Regex("([+\\-])?\\d+")
@@ -100,6 +103,7 @@ fun <T> String.mapGroups(regex: Regex, transform: (MatchResult.Destructured) -> 
 
 fun <T> Iterable<T>.rest() = drop(1)
 
+fun Iterable<Int>.asLongs() = map(Int::toLong)
 fun Iterable<Long>.product() = reduce(Long::times)
 fun Iterable<Int>.product() = reduce(Int::times)
 fun Sequence<Int>.product() = reduce(Int::times)
